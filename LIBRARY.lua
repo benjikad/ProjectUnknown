@@ -9,7 +9,12 @@ local themes = {
 }
 local HttpService = game:GetService('HttpService')
 
-lib.libVersion = '1.00.1'
+lib.libVersion = '1.00.0'
+
+local TweenService = game:GetService('TweenService')
+local UIS = game:GetService('UserInputService')
+
+local dragging = false
 
 local function makeDraggable(obj, objToMove)
 
