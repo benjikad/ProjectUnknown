@@ -23,7 +23,7 @@ function lib.new(theme)
 
     local sels = Instance.new('Frame')
     sels.Size = UDim2.new(0,50,0,300)
-    sels.AnchorPoint = Vector3.new(1,0)
+    sels.AnchorPoint = Vector2.new(1,0)
     sels.Position = UDim2.new(1,0,0,0)
     sels.BackgroundColor3 = theme.light
 
@@ -33,7 +33,7 @@ function lib.new(theme)
     sels.BackgroundColor3 = theme.med
 
     local uic = Instance.new('UICorner')
-    
+
     uic.Parent = sels
 
     sels.Parent = f
