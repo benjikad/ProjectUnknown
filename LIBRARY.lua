@@ -8,7 +8,9 @@ local themes = {
     },
 }
 local HttpService = game:GetService('HttpService')
- 
+
+lib.libVersion = '1.00.0'
+
 function lib.new(theme)
     theme = themes[theme or ''] or themes['default']
 
@@ -45,10 +47,15 @@ function lib.new(theme)
     title.Size = UDim2.new(1,0,0,30)
     title.Position = UDim2.new(0,0,0,0)
     title.AnchorPoint = Vector2.new(0,1)
-    title.Text = 'Project UNKNOWN'
+    title.Text = 'Project UNKNOWN - v'..version
     title.BackgroundTransparency = 1
     title.TextTransparency = 0
     title.TextColor3 = Color3.new(1,1,1)
+    title.TextScaled = true
+    title.FontFace.Bold = true
+
+    local uic = Instance.new('UIStroke')
+    uic.Parent = title
     
     title.Parent = f
     container.Parent = f
