@@ -27,15 +27,28 @@ function lib.new(theme)
     sels.Position = UDim2.new(1,0,0,0)
     sels.BackgroundColor3 = theme.light
 
-    local container = Instance.new('Frame')
-    sels.Size = UDim2.new(0,330,0,280)
-    sels.Position = UDim2.new(0,10,0,10)
-    sels.BackgroundColor3 = theme.med
-
     local uic = Instance.new('UICorner')
-
     uic.Parent = sels
 
+    local container = Instance.new('Frame')
+    container.Size = UDim2.new(0,330,0,280)
+    container.Position = UDim2.new(0,10,0,10)
+    container.BackgroundColor3 = theme.med
+
+    local uic = Instance.new('UICorner')
+    uic.Parent = container
+
+    local title = Instance.new('TextLabel')
+    title.Size = UDim2.new(1,0,0,30)
+    title.Position = UDim2.new(0,0,0,0)
+    title.AnchorPoint = Vector2.new(0,1)
+    title.Text = 'Project UNKNOWN'
+    title.BackgroundTransparency = 1
+    title.TextTransparency = 0
+    title.TextColor3 = Color3.new(1,1,1)
+    
+    title.Parent = f
+    container.Parent = f
     sels.Parent = f
     f.Parent = g
 
