@@ -47,7 +47,7 @@ function lib.new(theme)
     title.Size = UDim2.new(1,0,0,30)
     title.Position = UDim2.new(0,0,0,0)
     title.AnchorPoint = Vector2.new(0,1)
-    title.Text = 'Project UNKNOWN - v'..version
+    title.Text = 'Project UNKNOWN - v'..lib.libVersion
     title.BackgroundTransparency = 1
     title.TextTransparency = 0
     title.TextColor3 = Color3.new(1,1,1)
