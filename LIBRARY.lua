@@ -20,11 +20,14 @@ function lib.new(theme)
     f.Size = UDim2.new(0,400,0,300)
     f.Position = UDim2.new(.25,0,.25,0)
     f.BackgroundColor3 = theme.base
+    
+    local uic = Instance.new('UICorner')
+    uic.Parent = f
 
     local sels = Instance.new('Frame')
-    sels.Size = UDim2.new(0,50,0,300)
+    sels.Size = UDim2.new(0,40,0,280)
     sels.AnchorPoint = Vector2.new(1,0)
-    sels.Position = UDim2.new(1,0,0,0)
+    sels.Position = UDim2.new(1,-10,0,10)
     sels.BackgroundColor3 = theme.light
 
     local uic = Instance.new('UICorner')
