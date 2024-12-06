@@ -9,7 +9,62 @@ local themes = {
 }
 local HttpService = game:GetService('HttpService')
 
-lib.libVersion = '1.00.0'
+lib.libVersion = '1.00.1'
+
+local function makeDraggable(obj, objToMove)
+
+	objToMove = objToMove or obj
+
+	local dragger = obj
+	local dragging = false
+	local dragStart, startPos
+
+	-- Function to update the object's position
+	local function updateInput(input)
+		local offset = input.Position - dragStart
+		local newPosition = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + offset.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + offset.Y
+		)
+		TweenService:Create(objToMove, TweenInfo.new(0.25), {Position = newPosition}):Play()
+	end
+
+	-- InputBegan event for starting drag
+	dragger.InputBegan:Connect(function(input)
+		if current_drag == nil and (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) 
+			and not UIS:GetFocusedTextBox() then
+			dragging = true
+			dragStart = input.Position
+			startPos = objToMove.Position
+			current_drag = dragger
+			objToMove.ZIndex = 2
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+					objToMove.ZIndex = 1
+					current_drag = nil
+				end
+			end)
+		end
+	end)
+
+	-- InputChanged event to track dragging
+	dragger.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	-- Global InputChanged event for updating position
+	UIS.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			updateInput(input)
+		end
+	end)
+end
 
 function lib.new(theme)
     theme = themes[theme or ''] or themes['default']
@@ -61,6 +116,8 @@ function lib.new(theme)
     container.Parent = f
     sels.Parent = f
     f.Parent = g
+
+    makeDraggable(f)
 
     return f
 end
