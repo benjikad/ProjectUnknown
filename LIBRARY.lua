@@ -2,7 +2,8 @@ local lib = {}
 
 local themes = {
     ['default'] = {
-        ['base'] = Color3.fromRGB(25,25,25),
+        ['dark'] = Color3.fromRGB(25,25,25),
+        ['base'] = Color3.fromRGB(35,35,35),
         ['med'] = Color3.fromRGB(45,45,45),
         ['light'] = Color3.fromRGB(75,75,75),
     },
@@ -44,12 +45,10 @@ local function makeDraggable(obj, objToMove)
 			dragStart = input.Position
 			startPos = objToMove.Position
 			current_drag = dragger
-			objToMove.ZIndex = 2
 
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
 					dragging = false
-					objToMove.ZIndex = 1
 					current_drag = nil
 				end
 			end)
@@ -79,7 +78,7 @@ function lib.new(theme)
     g.Parent = game:GetService('CoreGui')
 
     local f = Instance.new('Frame')
-    f.Size = UDim2.new(0,400,0,300)
+    f.Size = UDim2.new(0,500,0,300)
     f.Position = UDim2.new(.25,0,.25,0)
     f.BackgroundColor3 = theme.base
     
@@ -87,10 +86,11 @@ function lib.new(theme)
     uic.Parent = f
 
     local sels = Instance.new('Frame')
-    sels.Size = UDim2.new(0,40,0,280)
+    sels.Size = UDim2.new(0,90,0,280)
     sels.AnchorPoint = Vector2.new(1,0)
     sels.Position = UDim2.new(1,-10,0,10)
     sels.BackgroundColor3 = theme.light
+    sels.Name = 'Selections'
 
     local uic = Instance.new('UICorner')
     uic.Parent = sels
@@ -99,13 +99,30 @@ function lib.new(theme)
     container.Size = UDim2.new(0,330,0,280)
     container.Position = UDim2.new(0,10,0,10)
     container.BackgroundColor3 = theme.med
+    container.Name = 'Container'
+
+    local containerScrl = Instance.new('ScrollingFrame')
+    containerScrl.Size = UDim2.new(1,-10,1,-10)
+    containerScrl.Position = UDim2.new(0,5,0,5)
+    containerScrl.BackgroundTransparency = 1
+    containerScrl.Name = 'containerScrl'
+    containerScrl.ScrollBarThickness = 5
+    containerScrl.CanvasSize = UDim2.new(0,0,0,0)
+    containerScrl.AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y
 
     local uic = Instance.new('UICorner')
     uic.Parent = container
 
+    local top = Instance.new('Frame')
+    top.Size = UDim2.new(1,0,0,25)
+    top.AnchorPoint = Vector2.new(0,1)
+    top.Position = UDim2.new(0,0,0,0)
+    top.BackgroundColor3 = theme.dark
+    top.Name = 'Top'
+
     local title = Instance.new('TextLabel')
-    title.Size = UDim2.new(1,0,0,30)
-    title.Position = UDim2.new(0,0,0,0)
+    title.Size = UDim2.new(1,-10,1,0)
+    title.Position = UDim2.new(0,10,0,0)
     title.AnchorPoint = Vector2.new(0,1)
     title.Text = 'Project UNKNOWN - v'..lib.libVersion
     title.BackgroundTransparency = 1
@@ -113,18 +130,36 @@ function lib.new(theme)
     title.TextColor3 = Color3.new(1,1,1)
     title.TextScaled = true
     title.FontFace.Bold = true
+    title.TextXAlignment = Enum.TextXAlignment.Left
 
     local uic = Instance.new('UIStroke')
     uic.Parent = title
     
-    title.Parent = f
+    top.Parent = f
+    title.Parent = top
     container.Parent = f
+    containerScrl.Parent = container
     sels.Parent = f
     f.Parent = g
 
     makeDraggable(f)
 
     return f
+end
+
+function lib.newSection(library, conf)
+    if typeof(conf) == 'table' then
+        local name = conf.name or 'No name.'
+
+    end
+end
+
+function lib.newButton(section, conf, callback)
+    if typeof(conf) == 'table' then
+        local callback = callback or function() end
+        local title = conf.title or 'No title.'
+
+    end
 end
 
 return lib
